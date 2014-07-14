@@ -5,16 +5,22 @@ import java.util.Date;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
+
+import javax.persistence.ManyToOne;
 
 @Entity
 @Table (name = "pessoa")
 public class Pessoa implements Serializable {
     
-    private static final long serialVersionUID = 1L;
+    
+   private static final long serialVersionUID = 1L;
     
     @Id
     @GeneratedValue
@@ -34,6 +40,10 @@ public class Pessoa implements Serializable {
     @Column (name = "dataCadastro", nullable = false)
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date dataCadastro;
+    
+    @JoinColumn(name = "pessoa", referencedColumnName = "idSexo")
+    @ManyToOne
+    private Pessoa pessoa;
 
     public Pessoa() {
     }
@@ -97,6 +107,7 @@ public class Pessoa implements Serializable {
     @Override
     public int hashCode() {
         int hash = 3;
+        hash = 43 * hash + Objects.hashCode(this.idPessoa);
         return hash;
     }
 
@@ -114,7 +125,5 @@ public class Pessoa implements Serializable {
         }
         return true;
     }
-    
-    
     
 }
