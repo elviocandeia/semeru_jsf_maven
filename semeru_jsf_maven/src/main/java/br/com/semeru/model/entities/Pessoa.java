@@ -2,18 +2,18 @@ package br.com.semeru.model.entities;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.ForeignKey;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
-
-import javax.persistence.ManyToOne;
 
 @Entity
 @Table (name = "pessoa")
@@ -34,16 +34,21 @@ public class Pessoa implements Serializable {
     private String telefone;
     @Column (name = "cpf", nullable = false, length = 14)
     private String cpf;
-    @Column (name = "datNascimento", nullable = false)
+    @Column (name = "dataNascimento", nullable = false)
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date dataNascimento;
     @Column (name = "dataCadastro", nullable = false)
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date dataCadastro;
     
-    @JoinColumn(name = "pessoa", referencedColumnName = "idSexo")
-    @ManyToOne
-    private Pessoa pessoa;
+    @OneToOne(mappedBy = "pessoa", fetch = FetchType.LAZY)
+    @org.hibernate.annotations.ForeignKey(name = "EnderecoPessoa")
+    private List<Endereco> enderecos;
+    
+    @ManyToOne   
+    @org.hibernate.annotations.ForeignKey(name = "PessoaSexo")
+    @JoinColumn(name = "idSexo", referencedColumnName = "idSexo")    
+    private List<Sexo> sexos;
 
     public Pessoa() {
     }
@@ -102,6 +107,22 @@ public class Pessoa implements Serializable {
 
     public void setDataCadastro(Date dataCadastro) {
         this.dataCadastro = dataCadastro;
+    }
+
+    public List<Sexo> getSexos() {
+        return sexos;
+    }
+
+    public void setSexos(List<Sexo> sexos) {
+        this.sexos = sexos;
+    }
+
+    public List<Endereco> getEnderecos() {
+        return enderecos;
+    }
+
+    public void setEnderecos(List<Endereco> enderecos) {
+        this.enderecos = enderecos;
     }
 
     @Override

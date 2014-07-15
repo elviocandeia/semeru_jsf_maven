@@ -1,5 +1,6 @@
 package br.com.semeru.model.entities;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
 import javax.persistence.Column;
@@ -12,7 +13,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "tipoEndereco")
-public class TipoEndereco {
+public class TipoEndereco implements Serializable {
     
     private static final long serialVersionUID = 1L;
     

@@ -13,9 +13,12 @@ import javax.persistence.Table;
 
 
 @Entity
-@Table(name = "cidade")
+@Table(name = "cidade") // Nome da Tabela
 public class Cidade implements Serializable {
-        
+    
+    private static final long serialVersionUID = 1L;
+      
+    // Campos da Tabela
     @Id
     @GeneratedValue
     @Column(name = "idCidade")
@@ -23,7 +26,8 @@ public class Cidade implements Serializable {
     @Column(name = "nome", length = 80, nullable = false)
     private String nome;
     
-    @OneToMany(mappedBy = "cidade", fetch = FetchType.LAZY)
+    // Relacinamento entre as Tabelas
+    @OneToMany(mappedBy = "cidade", fetch = FetchType.LAZY) // Uma cidade pode ter muitos endereços
     @org.hibernate.annotations.ForeignKey(name = "EnderecoCidade")
     private List<Endereco> enderecos;
     
@@ -47,6 +51,14 @@ public class Cidade implements Serializable {
         this.nome = nome;
     }
 
+    public List<Endereco> getEnderecos() {
+        return enderecos;
+    }
+
+    public void setEnderecos(List<Endereco> enderecos) {
+        this.enderecos = enderecos;
+    }
+    
     @Override
     public int hashCode() {
         int hash = 3;
